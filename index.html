@@ -207,22 +207,23 @@ pick(0);
   </section>
 </main>
 
-<!-- Ventana superpuesta para las tablas -->
+<!-- Ventana ampliada a pantalla casi completa -->
 <div id="modalTabla"
      role="dialog"
      aria-modal="true"
      aria-label="Tabla ampliada"
      onclick="cerrarTabla()"
      style="display:none; position:fixed; inset:0; z-index:99999;
-            background:rgba(0,0,0,.85); align-items:center;
-            justify-content:center; padding:20px;">
+            background:rgba(0,0,0,.94); align-items:center;
+            justify-content:center; padding:4px;">
 
   <button type="button"
           aria-label="Cerrar tabla"
           onclick="cerrarTabla()"
-          style="position:absolute; top:12px; right:18px;
-                 font-size:32px; color:white; background:transparent;
-                 border:0; cursor:pointer; z-index:2;">
+          style="position:fixed; top:10px; right:16px;
+                 font-size:36px; color:white; background:#333;
+                 border:0; border-radius:50%; width:48px; height:48px;
+                 cursor:pointer; z-index:100000;">
     &times;
   </button>
 
@@ -230,11 +231,12 @@ pick(0);
        src=""
        alt="Tabla ampliada"
        onclick="event.stopPropagation()"
-       style="display:block; max-width:95vw; max-height:90vh;
-              width:auto; height:auto; object-fit:contain;
-              background:white; border-radius:6px;
-              box-shadow:0 4px 24px rgba(0,0,0,.4);">
+       style="display:block; width:auto; height:auto;
+              max-width:99vw; max-height:98vh;
+              object-fit:contain; background:white;
+              border-radius:3px;">
 </div>
+
 
 <script>
 function abrirTabla(tipo) {
