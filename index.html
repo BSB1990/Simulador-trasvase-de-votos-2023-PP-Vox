@@ -240,18 +240,18 @@ pick(0);
 
 <script>
 function descargarTabla(tipo) {
-  const imagenes = {
-    pp: 'imagen%201.jpg',
-    vox: 'imagen%202.jpg'
+  const archivos = {
+    pp: 'resultados_Vox_a_PP_por_circunscripcion_v2.xlsx',
+    vox: 'PP_a_Vox_resultados_por_circunscripcion.xlsx'
   };
 
   const nombres = {
-    pp: 'tabla-PP-a-Vox.jpg',
-    vox: 'tabla-Vox-a-PP.jpg'
+    pp: 'resultados_Vox_a_PP_por_circunscripcion_v2.xlsx',
+    vox: 'PP_a_Vox_resultados_por_circunscripcion.xlsx'
   };
 
   const enlace = document.createElement('a');
-  enlace.href = imagenes[tipo];
+  enlace.href = archivos[tipo];
   enlace.download = nombres[tipo];
 
   document.body.appendChild(enlace);
