@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comparador de trasvases PP ↔ Vox · simuladores d'Hondt</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg:#f3f5f8; --fg:#182230; --muted:#5e6b7a; --card:#fff;
+  --border:#d8dee8; --blue:#1f5fbf; --green:#5aa02c;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg:#15181d; --fg:#edf1f7; --muted:#a9b3c2; --card:#20252d; --border:#3a424e; }
+}
+* { box-sizing:border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+header { padding:24px clamp(16px,3vw,36px) 18px; max-width:1800px; margin:auto; }
+.eyebrow { margin:0 0 6px; text-transform:uppercase; letter-spacing:.09em; font-size:12px; font-weight:750; color:var(--muted); }
+h1 { font-size:clamp(24px,3vw,36px); line-height:1.12; margin:0 0 9px; letter-spacing:-.03em; }
+.intro { color:var(--muted); max-width:850px; margin:0; }
+.legend { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+.pill { display:inline-flex; align-items:center; gap:8px; border:1px solid var(--border); background:var(--card); padding:7px 11px; border-radius:999px; font-size:13px; font-weight:650; }
+.swatch { width:9px; height:9px; border-radius:50%; display:inline-block; }
+.scenarios { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; max-width:1800px; margin:0 auto; padding:0 clamp(10px,2vw,28px) 28px; align-items:start; }
+.panel { min-width:0; overflow:hidden; border:1px solid var(--border); border-radius:16px; background:var(--card); box-shadow:0 5px 20px rgba(20,35,55,.06); }
+.panel-head { padding:15px 17px 13px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:11px; }
+.panel-head .num { width:34px; height:34px; display:grid; place-items:center; border-radius:10px; color:white; font-weight:800; flex:none; }
+.panel-head h2 { margin:0; font-size:17px; line-height:1.2; }
+.panel-head p { margin:3px 0 0; color:var(--muted); font-size:12px; }
+.frame-wrap { background:var(--card); }
+iframe { display:block; width:100%; border:0; min-height:1100px; background:var(--card); }
+footer { max-width:1800px; margin:0 auto; padding:0 clamp(16px,3vw,36px) 24px; color:var(--muted); font-size:12px; }
+@media(max-width:900px) { .scenarios { grid-template-columns:1fr; max-width:760px; } iframe { min-height:1000px; } }
+@media print { .scenarios { display:block; } .panel { margin-bottom:20px; break-inside:avoid; } iframe { min-height:1200px; } }
+</style>
+</head>
+<body>
+<header>
+  <p class="eyebrow">Comparador de escenarios · Ley d’Hondt</p>
+  <h1>Trasvases de votos entre PP y Vox</h1>
+  <p class="intro">Los dos simuladores originales, juntos para comparar escenarios. Cada panel conserva sus propios controles, circunscripciones, cálculos, gráficos y tabla d’Hondt; modificar uno no cambia el otro.</p>
+  <div class="legend">
+    <span class="pill"><span class="swatch" style="background:#1f77d4"></span>PP → Vox</span>
+    <span class="pill"><span class="swatch" style="background:#5aa02c"></span>Vox → PP</span>
+    <span class="pill">Controles independientes</span>
+  </div>
+</header>
+<main class="scenarios">
+  <section class="panel" aria-label="Escenario PP a Vox">
+    <div class="panel-head">
+      <span class="num" style="background:#1f77d4">1</span>
+      <div><h2>PP → Vox</h2><p>El PP cede votos a Vox</p></div>
+    </div>
+    <div class="frame-wrap"><iframe title="Simulador original de trasvase PP a Vox" id="ppvox" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;es&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;Trasvase PP → Vox · simulador d&#x27;Hondt&lt;/title&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot;&gt;
+&lt;style&gt;
+:root{--bg:#fafaf7;--fg:#1d1d1b;--mu:#6b6b66;--card:#fff;--bd:#dcdcd4;--win:#cfe8c4;--ac:#1f5fbf;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=&quot;light&quot;]){--bg:#17181a;--fg:#ececE6;--mu:#9a9a94;--card:#222427;--bd:#383b3f;--win:#2f5a2b;--ac:#6ea0f0;color-scheme:dark}}
+:root[data-theme=&quot;dark&quot;]{--bg:#17181a;--fg:#ececE6;--mu:#9a9a94;--card:#222427;--bd:#383b3f;--win:#2f5a2b;--ac:#6ea0f0;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 system-ui,Arial,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:16px}
+h1{font-size:22px;margin:4px 0}p.s{color:var(--mu);margin:0 0 12px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tabs button{border:1px solid var(--bd);background:var(--card);color:var(--fg);padding:6px 11px;border-radius:16px;cursor:pointer;font:inherit}
+.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin:12px 0}
+.ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.ctl input[type=range]{flex:1;min-width:200px}.ctl input[type=number]{width:110px;font:inherit;padding:4px;background:var(--bg);color:var(--fg);border:1px solid var(--bd);border-radius:6px}
+.ctl button{font:inherit;padding:5px 10px;border-radius:8px;border:1px solid var(--ac);background:none;color:var(--ac);cursor:pointer}
+#msg{font-weight:600;padding:10px 12px;border-radius:10px;margin:12px 0}
+.ok{background:#d9efd2;color:#1d4a14}.ko{background:#f6d6d3;color:#6b1a14}
+@media (prefers-color-scheme:dark){:root:not([data-theme=&quot;light&quot;]) .ok{background:#24431f;color:#cdeec4}:root:not([data-theme=&quot;light&quot;]) .ko{background:#5a2420;color:#f6d0cc}}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.bar{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:13px}.bar .nm{width:52px}.bar .tr{flex:1;background:var(--bd);height:16px;border-radius:4px;overflow:hidden}.bar .fi{height:100%}.bar .v{width:78px;text-align:right;font-variant-numeric:tabular-nums}
+.dots{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0 12px}.dot{width:22px;height:22px;border-radius:50%;display:inline-block}
+.dot.new{outline:3px solid var(--fg);outline-offset:1px}.lbl{font-size:12px;color:var(--mu);margin-top:8px}
+.tw{overflow-x:auto}table{border-collapse:collapse;font-size:13px;width:100%;font-variant-numeric:tabular-nums}th,td{border:1px solid var(--bd);padding:4px 7px;text-align:right;white-space:nowrap}th{background:var(--bg)}td.w{background:var(--win);font-weight:700}td:first-child,th:first-child{text-align:left}
+h2{font-size:16px;margin:0 0 6px}.foot{color:var(--mu);font-size:12px}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;main&gt;
+&lt;h1&gt;¿Y si el PP cediera votos a Vox?&lt;/h1&gt;
+&lt;p class=&quot;s&quot;&gt;Simulador de la ley d&#x27;Hondt en las 10 circunscripciones donde Vox puede ganar un escaño sin que el PP pierda ninguno. Mueve el deslizador y mira cómo cambia el reparto.&lt;/p&gt;
+&lt;div class=&quot;tabs&quot; id=&quot;tabs&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;card&quot;&gt;&lt;div class=&quot;ctl&quot;&gt;&lt;b&gt;Votos transferidos PP → Vox:&lt;/b&gt;
+&lt;input type=&quot;range&quot; id=&quot;rg&quot; min=&quot;0&quot; step=&quot;1&quot;&gt;&lt;input type=&quot;number&quot; id=&quot;nb&quot; min=&quot;0&quot; step=&quot;1&quot;&gt;&lt;button id=&quot;mn&quot;&gt;Poner el mínimo&lt;/button&gt;&lt;/div&gt;
+&lt;div id=&quot;msg&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;grid&quot;&gt;&lt;div class=&quot;card&quot;&gt;&lt;h2&gt;Votos&lt;/h2&gt;&lt;div id=&quot;bars&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;card&quot;&gt;&lt;h2&gt;Escaños&lt;/h2&gt;&lt;div class=&quot;lbl&quot;&gt;Original&lt;/div&gt;&lt;div class=&quot;dots&quot; id=&quot;d0&quot;&gt;&lt;/div&gt;&lt;div class=&quot;lbl&quot;&gt;Tras el trasvase (con borde: escaño ganado)&lt;/div&gt;&lt;div class=&quot;dots&quot; id=&quot;d1&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;card&quot;&gt;&lt;h2&gt;Tabla d&#x27;Hondt tras el trasvase&lt;/h2&gt;&lt;div class=&quot;tw&quot;&gt;&lt;table id=&quot;tb&quot;&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;p class=&quot;foot&quot;&gt;Verde: los N cocientes más altos. Empates de cociente: gana el partido con más votos totales. Se ignora la barrera del 3 %.&lt;/p&gt;&lt;/div&gt;
+&lt;/main&gt;&lt;script&gt;
+const D=[{&quot;n&quot;: &quot;Sevilla&quot;, &quot;N&quot;: 12, &quot;x&quot;: 7659, &quot;p&quot;: [[&quot;PP&quot;, 353663, 4], [&quot;PSOE&quot;, 387760, 5], [&quot;Vox&quot;, 141087, 1], [&quot;Sumar&quot;, 148745, 2]]}, {&quot;n&quot;: &quot;Illes Balears&quot;, &quot;N&quot;: 8, &quot;x&quot;: 24644, &quot;p&quot;: [[&quot;PP&quot;, 179303, 3], [&quot;PSOE&quot;, 151786, 3], [&quot;Vox&quot;, 76547, 1], [&quot;Sumar&quot;, 83487, 1]]}, {&quot;n&quot;: &quot;Albacete&quot;, &quot;N&quot;: 4, &quot;x&quot;: 1412, &quot;p&quot;: [[&quot;PP&quot;, 88299, 2], [&quot;PSOE&quot;, 76322, 2], [&quot;Vox&quot;, 36750, 0]]}, {&quot;n&quot;: &quot;Burgos&quot;, &quot;N&quot;: 4, &quot;x&quot;: 9030, &quot;p&quot;: [[&quot;PP&quot;, 82329, 2], [&quot;PSOE&quot;, 69775, 2], [&quot;Vox&quot;, 25858, 0]]}, {&quot;n&quot;: &quot;Girona&quot;, &quot;N&quot;: 6, &quot;x&quot;: 8920, &quot;p&quot;: [[&quot;PP&quot;, 31341, 0], [&quot;PSOE&quot;, 93448, 2], [&quot;Vox&quot;, 22706, 0], [&quot;Sumar&quot;, 35344, 1], [&quot;ERC&quot;, 47531, 1], [&quot;Junts&quot;, 63251, 2]]}, {&quot;n&quot;: &quot;Lleida&quot;, &quot;N&quot;: 4, &quot;x&quot;: 14648, &quot;p&quot;: [[&quot;PP&quot;, 23699, 0], [&quot;PSOE&quot;, 54414, 2], [&quot;Vox&quot;, 12560, 0], [&quot;ERC&quot;, 34331, 1], [&quot;Junts&quot;, 33228, 1]]}, {&quot;n&quot;: &quot;Tarragona&quot;, &quot;N&quot;: 6, &quot;x&quot;: 2753, &quot;p&quot;: [[&quot;PP&quot;, 51061, 1], [&quot;PSOE&quot;, 121126, 2], [&quot;Vox&quot;, 38039, 0], [&quot;Sumar&quot;, 41719, 1], [&quot;ERC&quot;, 55461, 1], [&quot;Junts&quot;, 40791, 1]]}, {&quot;n&quot;: &quot;Pontevedra&quot;, &quot;N&quot;: 7, &quot;x&quot;: 32374, &quot;p&quot;: [[&quot;PP&quot;, 227658, 3], [&quot;PSOE&quot;, 179737, 3], [&quot;Vox&quot;, 27539, 0], [&quot;Sumar&quot;, 75615, 1]]}, {&quot;n&quot;: &quot;Murcia&quot;, &quot;N&quot;: 10, &quot;x&quot;: 26087, &quot;p&quot;: [[&quot;PP&quot;, 307972, 4], [&quot;PSOE&quot;, 189210, 3], [&quot;Vox&quot;, 163124, 2], [&quot;Sumar&quot;, 71578, 1]]}, {&quot;n&quot;: &quot;La Rioja&quot;, &quot;N&quot;: 4, &quot;x&quot;: 14106, &quot;p&quot;: [[&quot;PP&quot;, 79715, 2], [&quot;PSOE&quot;, 62322, 2], [&quot;Vox&quot;, 17056, 0]]}];
+const COL={PP:&#x27;#1f77d4&#x27;,PSOE:&#x27;#e03a3e&#x27;,Vox:&#x27;#5aa02c&#x27;,Sumar:&#x27;#c2417e&#x27;,ERC:&#x27;#e6a700&#x27;,Junts:&#x27;#14a3a3&#x27;};
+let cur=0;const $=id=&gt;document.getElementById(id),f=n=&gt;Math.round(n).toLocaleString(&#x27;es-ES&#x27;);
+function dh(v,N){const q=[];v.forEach((x,i)=&gt;{for(let d=1;d&lt;=N;d++)q.push({i,d,x})});
+q.sort((a,b)=&gt;{const t=b.x*a.d-a.x*b.d;return t!==0?(t&gt;0?1:-1):b.x-a.x});
+const s=v.map(()=&gt;0);q.slice(0,N).forEach(e=&gt;s[e.i]++);return s}
+function dots(el,s,P,base){el.innerHTML=&#x27;&#x27;;P.forEach((p,i)=&gt;{for(let k=0;k&lt;s[i];k++){const d=document.createElement(&#x27;span&#x27;);d.className=&#x27;dot&#x27;+(base&amp;&amp;k&gt;=base[i]?&#x27; new&#x27;:&#x27;&#x27;);d.style.background=COL[p[0]]||&#x27;#888&#x27;;d.title=p[0];el.appendChild(d)}})}
+function draw(){const c=D[cur],P=c.p,x=+$(&#x27;rg&#x27;).value,v=P.map(p=&gt;p[1]);
+const w=v.slice();w[0]-=x;w[P.findIndex(p=&gt;p[0]==&#x27;Vox&#x27;)]+=x;
+const s0=P.map(p=&gt;p[2]),s1=dh(w,c.N),vi=P.findIndex(p=&gt;p[0]==&#x27;Vox&#x27;);
+const mx=Math.max(...v,...w);
+$(&#x27;bars&#x27;).innerHTML=P.map((p,i)=&gt;`&lt;div class=&quot;bar&quot;&gt;&lt;span class=&quot;nm&quot;&gt;${p[0]}&lt;/span&gt;&lt;span class=&quot;tr&quot;&gt;&lt;span class=&quot;fi&quot; style=&quot;width:${v[i]/mx*100}%;background:${COL[p[0]]||&#x27;#888&#x27;};opacity:.35;display:block&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;v&quot;&gt;${f(v[i])}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;bar&quot;&gt;&lt;span class=&quot;nm&quot;&gt;&lt;/span&gt;&lt;span class=&quot;tr&quot;&gt;&lt;span class=&quot;fi&quot; style=&quot;width:${w[i]/mx*100}%;background:${COL[p[0]]||&#x27;#888&#x27;};display:block&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;v&quot;&gt;&lt;b&gt;${f(w[i])}&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;`).join(&#x27;&#x27;)+&#x27;&lt;p class=&quot;foot&quot;&gt;Barra clara: original · barra intensa: tras el trasvase&lt;/p&gt;&#x27;;
+dots($(&#x27;d0&#x27;),s0,P);dots($(&#x27;d1&#x27;),s1,P,s0);
+let h=&#x27;&lt;tr&gt;&lt;th&gt;Partido&lt;/th&gt;&lt;th&gt;Votos&lt;/th&gt;&#x27;;for(let d=1;d&lt;=c.N;d++)h+=`&lt;th&gt;÷${d}&lt;/th&gt;`;h+=&#x27;&lt;th&gt;Esc.&lt;/th&gt;&lt;/tr&gt;&#x27;;
+const q=[];w.forEach((vv,i)=&gt;{for(let d=1;d&lt;=c.N;d++)q.push({i,d})});
+P.forEach((p,i)=&gt;{h+=`&lt;tr&gt;&lt;td&gt;&lt;b&gt;${p[0]}&lt;/b&gt;&lt;/td&gt;&lt;td&gt;${f(w[i])}&lt;/td&gt;`;for(let d=1;d&lt;=c.N;d++)h+=`&lt;td class=&quot;${d&lt;=s1[i]?&#x27;w&#x27;:&#x27;&#x27;}&quot;&gt;${(w[i]/d).toLocaleString(&#x27;es-ES&#x27;,{maximumFractionDigits:2,minimumFractionDigits:2})}&lt;/td&gt;`;h+=`&lt;td&gt;&lt;b&gt;${s1[i]}&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;`});
+$(&#x27;tb&#x27;).innerHTML=h;
+const gain=s1[vi]-s0[vi],voxok=s1[0]&gt;=s0[0],lost=P.filter((p,i)=&gt;s1[i]&lt;s0[i]).map(p=&gt;p[0]);
+const m=$(&#x27;msg&#x27;);
+if(gain&gt;0&amp;&amp;voxok){m.className=&#x27;ok&#x27;;m.textContent=`Vox gana ${gain} escaño${gain&gt;1?&#x27;s&#x27;:&#x27;&#x27;} (${s0[vi]} → ${s1[vi]}), el PP conserva los suyos (${s1[0]}) y lo pierde: ${lost.join(&#x27;, &#x27;)}.`}
+else if(gain&gt;0){m.className=&#x27;ko&#x27;;m.textContent=`Vox gana ${gain} escaño, pero el PP pierde ${s0[0]-s1[0]} (${lost.join(&#x27;, &#x27;)}).`}
+else if(!voxok){m.className=&#x27;ko&#x27;;m.textContent=`Vox no gana escaño y el PP ya pierde uno.`}
+else{m.className=&#x27;ko&#x27;;m.textContent=`Con ${f(x)} votos Vox sigue con ${s0[vi]} escaños: todavía no basta. El mínimo es ${f(c.x)}.`}}
+function pick(i){cur=i;const c=D[cur],vx=c.p.find(p=&gt;p[0]==&#x27;PP&#x27;)[1];$(&#x27;rg&#x27;).max=vx;$(&#x27;nb&#x27;).max=vx;$(&#x27;rg&#x27;).value=$(&#x27;nb&#x27;).value=c.x;
+[...$(&#x27;tabs&#x27;).children].forEach((b,j)=&gt;b.classList.toggle(&#x27;on&#x27;,j==i));draw()}
+D.forEach((c,i)=&gt;{const b=document.createElement(&#x27;button&#x27;);b.textContent=c.n;b.onclick=()=&gt;pick(i);$(&#x27;tabs&#x27;).appendChild(b)});
+$(&#x27;rg&#x27;).oninput=()=&gt;{$(&#x27;nb&#x27;).value=$(&#x27;rg&#x27;).value;draw()};
+$(&#x27;nb&#x27;).oninput=()=&gt;{$(&#x27;rg&#x27;).value=Math.max(0,Math.min(+$(&#x27;nb&#x27;).max,+$(&#x27;nb&#x27;).value||0));draw()};
+$(&#x27;mn&#x27;).onclick=()=&gt;{$(&#x27;rg&#x27;).value=$(&#x27;nb&#x27;).value=D[cur].x;draw()};
+pick(0);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div>
+  </section>
+  <section class="panel" aria-label="Escenario Vox a PP">
+    <div class="panel-head">
+      <span class="num" style="background:#5aa02c">2</span>
+      <div><h2>Vox → PP</h2><p>Vox cede votos al PP</p></div>
+    </div>
+    <div class="frame-wrap"><iframe title="Simulador original de trasvase Vox a PP" id="voxpp" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;es&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;Trasvase Vox → PP · simulador d&#x27;Hondt&lt;/title&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot;&gt;
+&lt;style&gt;
+:root{--bg:#fafaf7;--fg:#1d1d1b;--mu:#6b6b66;--card:#fff;--bd:#dcdcd4;--win:#cfe8c4;--ac:#1f5fbf;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=&quot;light&quot;]){--bg:#17181a;--fg:#ececE6;--mu:#9a9a94;--card:#222427;--bd:#383b3f;--win:#2f5a2b;--ac:#6ea0f0;color-scheme:dark}}
+:root[data-theme=&quot;dark&quot;]{--bg:#17181a;--fg:#ececE6;--mu:#9a9a94;--card:#222427;--bd:#383b3f;--win:#2f5a2b;--ac:#6ea0f0;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.45 system-ui,Arial,sans-serif}
+main{max-width:1000px;margin:0 auto;padding:16px}
+h1{font-size:22px;margin:4px 0}p.s{color:var(--mu);margin:0 0 12px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.tabs button{border:1px solid var(--bd);background:var(--card);color:var(--fg);padding:6px 11px;border-radius:16px;cursor:pointer;font:inherit}
+.tabs button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin:12px 0}
+.ctl{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.ctl input[type=range]{flex:1;min-width:200px}.ctl input[type=number]{width:110px;font:inherit;padding:4px;background:var(--bg);color:var(--fg);border:1px solid var(--bd);border-radius:6px}
+.ctl button{font:inherit;padding:5px 10px;border-radius:8px;border:1px solid var(--ac);background:none;color:var(--ac);cursor:pointer}
+#msg{font-weight:600;padding:10px 12px;border-radius:10px;margin:12px 0}
+.ok{background:#d9efd2;color:#1d4a14}.ko{background:#f6d6d3;color:#6b1a14}
+@media (prefers-color-scheme:dark){:root:not([data-theme=&quot;light&quot;]) .ok{background:#24431f;color:#cdeec4}:root:not([data-theme=&quot;light&quot;]) .ko{background:#5a2420;color:#f6d0cc}}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.bar{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:13px}.bar .nm{width:52px}.bar .tr{flex:1;background:var(--bd);height:16px;border-radius:4px;overflow:hidden}.bar .fi{height:100%}.bar .v{width:78px;text-align:right;font-variant-numeric:tabular-nums}
+.dots{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0 12px}.dot{width:22px;height:22px;border-radius:50%;display:inline-block}
+.dot.new{outline:3px solid var(--fg);outline-offset:1px}.lbl{font-size:12px;color:var(--mu);margin-top:8px}
+.tw{overflow-x:auto}table{border-collapse:collapse;font-size:13px;width:100%;font-variant-numeric:tabular-nums}th,td{border:1px solid var(--bd);padding:4px 7px;text-align:right;white-space:nowrap}th{background:var(--bg)}td.w{background:var(--win);font-weight:700}td:first-child,th:first-child{text-align:left}
+h2{font-size:16px;margin:0 0 6px}.foot{color:var(--mu);font-size:12px}
+&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;main&gt;
+&lt;h1&gt;¿Y si Vox cediera votos al PP?&lt;/h1&gt;
+&lt;p class=&quot;s&quot;&gt;Simulador de la ley d&#x27;Hondt en las 10 circunscripciones donde el PP puede ganar un escaño sin que Vox pierda ninguno. Mueve el deslizador y mira cómo cambia el reparto.&lt;/p&gt;
+&lt;div class=&quot;tabs&quot; id=&quot;tabs&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;card&quot;&gt;&lt;div class=&quot;ctl&quot;&gt;&lt;b&gt;Votos transferidos Vox → PP:&lt;/b&gt;
+&lt;input type=&quot;range&quot; id=&quot;rg&quot; min=&quot;0&quot; step=&quot;1&quot;&gt;&lt;input type=&quot;number&quot; id=&quot;nb&quot; min=&quot;0&quot; step=&quot;1&quot;&gt;&lt;button id=&quot;mn&quot;&gt;Poner el mínimo&lt;/button&gt;&lt;/div&gt;
+&lt;div id=&quot;msg&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;grid&quot;&gt;&lt;div class=&quot;card&quot;&gt;&lt;h2&gt;Votos&lt;/h2&gt;&lt;div id=&quot;bars&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;card&quot;&gt;&lt;h2&gt;Escaños&lt;/h2&gt;&lt;div class=&quot;lbl&quot;&gt;Original&lt;/div&gt;&lt;div class=&quot;dots&quot; id=&quot;d0&quot;&gt;&lt;/div&gt;&lt;div class=&quot;lbl&quot;&gt;Tras el trasvase (con borde: escaño ganado)&lt;/div&gt;&lt;div class=&quot;dots&quot; id=&quot;d1&quot;&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;div class=&quot;card&quot;&gt;&lt;h2&gt;Tabla d&#x27;Hondt tras el trasvase&lt;/h2&gt;&lt;div class=&quot;tw&quot;&gt;&lt;table id=&quot;tb&quot;&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;p class=&quot;foot&quot;&gt;Verde: los N cocientes más altos. Empates de cociente: gana el partido con más votos totales. Se ignora la barrera del 3 %.&lt;/p&gt;&lt;/div&gt;
+&lt;/main&gt;&lt;script&gt;
+const D=[{&quot;n&quot;: &quot;Sevilla&quot;, &quot;N&quot;: 12, &quot;x&quot;: 18200, &quot;p&quot;: [[&quot;PP&quot;, 353663, 4], [&quot;PSOE&quot;, 387760, 5], [&quot;Vox&quot;, 141087, 1], [&quot;Sumar&quot;, 148745, 2]]}, {&quot;n&quot;: &quot;Illes Balears&quot;, &quot;N&quot;: 8, &quot;x&quot;: 23079, &quot;p&quot;: [[&quot;PP&quot;, 179303, 3], [&quot;PSOE&quot;, 151786, 3], [&quot;Vox&quot;, 76547, 1], [&quot;Sumar&quot;, 83487, 1]]}, {&quot;n&quot;: &quot;Albacete&quot;, &quot;N&quot;: 4, &quot;x&quot;: 26184, &quot;p&quot;: [[&quot;PP&quot;, 88299, 2], [&quot;PSOE&quot;, 76322, 2], [&quot;Vox&quot;, 36750, 0]]}, {&quot;n&quot;: &quot;Burgos&quot;, &quot;N&quot;: 4, &quot;x&quot;: 22334, &quot;p&quot;: [[&quot;PP&quot;, 82329, 2], [&quot;PSOE&quot;, 69775, 2], [&quot;Vox&quot;, 25858, 0]]}, {&quot;n&quot;: &quot;Girona&quot;, &quot;N&quot;: 6, &quot;x&quot;: 285, &quot;p&quot;: [[&quot;PP&quot;, 31341, 0], [&quot;PSOE&quot;, 93448, 2], [&quot;Vox&quot;, 22706, 0], [&quot;Sumar&quot;, 35344, 1], [&quot;ERC&quot;, 47531, 1], [&quot;Junts&quot;, 63251, 2]]}, {&quot;n&quot;: &quot;Lleida&quot;, &quot;N&quot;: 4, &quot;x&quot;: 3509, &quot;p&quot;: [[&quot;PP&quot;, 23699, 0], [&quot;PSOE&quot;, 54414, 2], [&quot;Vox&quot;, 12560, 0], [&quot;ERC&quot;, 34331, 1], [&quot;Junts&quot;, 33228, 1]]}, {&quot;n&quot;: &quot;Tarragona&quot;, &quot;N&quot;: 6, &quot;x&quot;: 30521, &quot;p&quot;: [[&quot;PP&quot;, 51061, 1], [&quot;PSOE&quot;, 121126, 2], [&quot;Vox&quot;, 38039, 0], [&quot;Sumar&quot;, 41719, 1], [&quot;ERC&quot;, 55461, 1], [&quot;Junts&quot;, 40791, 1]]}, {&quot;n&quot;: &quot;Pontevedra&quot;, &quot;N&quot;: 7, &quot;x&quot;: 11992, &quot;p&quot;: [[&quot;PP&quot;, 227658, 3], [&quot;PSOE&quot;, 179737, 3], [&quot;Vox&quot;, 27539, 0], [&quot;Sumar&quot;, 75615, 1]]}, {&quot;n&quot;: &quot;Murcia&quot;, &quot;N&quot;: 10, &quot;x&quot;: 7378, &quot;p&quot;: [[&quot;PP&quot;, 307972, 4], [&quot;PSOE&quot;, 189210, 3], [&quot;Vox&quot;, 163124, 2], [&quot;Sumar&quot;, 71578, 1]]}, {&quot;n&quot;: &quot;La Rioja&quot;, &quot;N&quot;: 4, &quot;x&quot;: 13768, &quot;p&quot;: [[&quot;PP&quot;, 79715, 2], [&quot;PSOE&quot;, 62322, 2], [&quot;Vox&quot;, 17056, 0]]}];
+const COL={PP:&#x27;#1f77d4&#x27;,PSOE:&#x27;#e03a3e&#x27;,Vox:&#x27;#5aa02c&#x27;,Sumar:&#x27;#c2417e&#x27;,ERC:&#x27;#e6a700&#x27;,Junts:&#x27;#14a3a3&#x27;};
+let cur=0;const $=id=&gt;document.getElementById(id),f=n=&gt;Math.round(n).toLocaleString(&#x27;es-ES&#x27;);
+function dh(v,N){const q=[];v.forEach((x,i)=&gt;{for(let d=1;d&lt;=N;d++)q.push({i,d,x})});
+q.sort((a,b)=&gt;{const t=b.x*a.d-a.x*b.d;return t!==0?(t&gt;0?1:-1):b.x-a.x});
+const s=v.map(()=&gt;0);q.slice(0,N).forEach(e=&gt;s[e.i]++);return s}
+function dots(el,s,P,base){el.innerHTML=&#x27;&#x27;;P.forEach((p,i)=&gt;{for(let k=0;k&lt;s[i];k++){const d=document.createElement(&#x27;span&#x27;);d.className=&#x27;dot&#x27;+(base&amp;&amp;k&gt;=base[i]?&#x27; new&#x27;:&#x27;&#x27;);d.style.background=COL[p[0]]||&#x27;#888&#x27;;d.title=p[0];el.appendChild(d)}})}
+function draw(){const c=D[cur],P=c.p,x=+$(&#x27;rg&#x27;).value,v=P.map(p=&gt;p[1]);
+const w=v.slice();w[0]+=x;w[P.findIndex(p=&gt;p[0]==&#x27;Vox&#x27;)]-=x;
+const s0=P.map(p=&gt;p[2]),s1=dh(w,c.N),vi=P.findIndex(p=&gt;p[0]==&#x27;Vox&#x27;);
+const mx=Math.max(...v,...w);
+$(&#x27;bars&#x27;).innerHTML=P.map((p,i)=&gt;`&lt;div class=&quot;bar&quot;&gt;&lt;span class=&quot;nm&quot;&gt;${p[0]}&lt;/span&gt;&lt;span class=&quot;tr&quot;&gt;&lt;span class=&quot;fi&quot; style=&quot;width:${v[i]/mx*100}%;background:${COL[p[0]]||&#x27;#888&#x27;};opacity:.35;display:block&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;v&quot;&gt;${f(v[i])}&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;bar&quot;&gt;&lt;span class=&quot;nm&quot;&gt;&lt;/span&gt;&lt;span class=&quot;tr&quot;&gt;&lt;span class=&quot;fi&quot; style=&quot;width:${w[i]/mx*100}%;background:${COL[p[0]]||&#x27;#888&#x27;};display:block&quot;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;v&quot;&gt;&lt;b&gt;${f(w[i])}&lt;/b&gt;&lt;/span&gt;&lt;/div&gt;`).join(&#x27;&#x27;)+&#x27;&lt;p class=&quot;foot&quot;&gt;Barra clara: original · barra intensa: tras el trasvase&lt;/p&gt;&#x27;;
+dots($(&#x27;d0&#x27;),s0,P);dots($(&#x27;d1&#x27;),s1,P,s0);
+let h=&#x27;&lt;tr&gt;&lt;th&gt;Partido&lt;/th&gt;&lt;th&gt;Votos&lt;/th&gt;&#x27;;for(let d=1;d&lt;=c.N;d++)h+=`&lt;th&gt;÷${d}&lt;/th&gt;`;h+=&#x27;&lt;th&gt;Esc.&lt;/th&gt;&lt;/tr&gt;&#x27;;
+const q=[];w.forEach((vv,i)=&gt;{for(let d=1;d&lt;=c.N;d++)q.push({i,d})});
+P.forEach((p,i)=&gt;{h+=`&lt;tr&gt;&lt;td&gt;&lt;b&gt;${p[0]}&lt;/b&gt;&lt;/td&gt;&lt;td&gt;${f(w[i])}&lt;/td&gt;`;for(let d=1;d&lt;=c.N;d++)h+=`&lt;td class=&quot;${d&lt;=s1[i]?&#x27;w&#x27;:&#x27;&#x27;}&quot;&gt;${(w[i]/d).toLocaleString(&#x27;es-ES&#x27;,{maximumFractionDigits:2,minimumFractionDigits:2})}&lt;/td&gt;`;h+=`&lt;td&gt;&lt;b&gt;${s1[i]}&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;`});
+$(&#x27;tb&#x27;).innerHTML=h;
+const gain=s1[0]-s0[0],voxok=s1[vi]&gt;=s0[vi],lost=P.filter((p,i)=&gt;s1[i]&lt;s0[i]).map(p=&gt;p[0]);
+const m=$(&#x27;msg&#x27;);
+if(gain&gt;0&amp;&amp;voxok){m.className=&#x27;ok&#x27;;m.textContent=`El PP gana ${gain} escaño${gain&gt;1?&#x27;s&#x27;:&#x27;&#x27;} (${s0[0]} → ${s1[0]}), Vox conserva los suyos (${s1[vi]}) y lo pierde: ${lost.join(&#x27;, &#x27;)}.`}
+else if(gain&gt;0){m.className=&#x27;ko&#x27;;m.textContent=`El PP gana ${gain} escaño, pero Vox pierde ${s0[vi]-s1[vi]} (${lost.join(&#x27;, &#x27;)}).`}
+else if(!voxok){m.className=&#x27;ko&#x27;;m.textContent=`El PP no gana escaño y Vox ya pierde uno.`}
+else{m.className=&#x27;ko&#x27;;m.textContent=`Con ${f(x)} votos el PP sigue con ${s0[0]} escaños: todavía no basta. El mínimo es ${f(c.x)}.`}}
+function pick(i){cur=i;const c=D[cur],vx=c.p.find(p=&gt;p[0]==&#x27;Vox&#x27;)[1];$(&#x27;rg&#x27;).max=vx;$(&#x27;nb&#x27;).max=vx;$(&#x27;rg&#x27;).value=$(&#x27;nb&#x27;).value=c.x;
+[...$(&#x27;tabs&#x27;).children].forEach((b,j)=&gt;b.classList.toggle(&#x27;on&#x27;,j==i));draw()}
+D.forEach((c,i)=&gt;{const b=document.createElement(&#x27;button&#x27;);b.textContent=c.n;b.onclick=()=&gt;pick(i);$(&#x27;tabs&#x27;).appendChild(b)});
+$(&#x27;rg&#x27;).oninput=()=&gt;{$(&#x27;nb&#x27;).value=$(&#x27;rg&#x27;).value;draw()};
+$(&#x27;nb&#x27;).oninput=()=&gt;{$(&#x27;rg&#x27;).value=Math.max(0,Math.min(+$(&#x27;nb&#x27;).max,+$(&#x27;nb&#x27;).value||0));draw()};
+$(&#x27;mn&#x27;).onclick=()=&gt;{$(&#x27;rg&#x27;).value=$(&#x27;nb&#x27;).value=D[cur].x;draw()};
+pick(0);
+&lt;/script&gt;&lt;/body&gt;&lt;/html&gt;"></iframe></div>
+  </section>
+</main>
+<footer>Los simuladores se muestran aislados entre sí para evitar conflictos de estilos o JavaScript. Los cálculos y datos de los archivos originales no se han reescrito.</footer>
+<script>
+(function() {
+  function fit(frame) {
+    function measure() {
+      try {
+        const doc = frame.contentDocument;
+        if (!doc) return;
+        const height = Math.max(doc.documentElement.scrollHeight, doc.body ? doc.body.scrollHeight : 0);
+        frame.style.height = (height + 8) + 'px';
+      } catch (_) {}
+    }
+    frame.addEventListener('load', function() {
+      measure();
+      try {
+        const doc = frame.contentDocument;
+        if (doc && 'ResizeObserver' in window) {
+          const ro = new ResizeObserver(measure);
+          ro.observe(doc.documentElement);
+          if (doc.body) ro.observe(doc.body);
+        }
+        if (doc) {
+          doc.addEventListener('click', function() { setTimeout(measure, 80); });
+          doc.addEventListener('input', measure);
+          doc.addEventListener('change', measure);
+        }
+      } catch (_) {}
+      setTimeout(measure, 250);
+      setTimeout(measure, 800);
+    });
+    window.addEventListener('resize', measure);
+  }
+  document.querySelectorAll('iframe').forEach(fit);
+})();
+</script>
+</body>
+</html>
