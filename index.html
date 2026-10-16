@@ -53,9 +53,9 @@ footer { max-width:1800px; margin:0 auto; padding:0 clamp(16px,3vw,36px) 24px; c
       <div><h2>PP → Vox</h2><p>El PP cede votos a Vox</p></div>
     </div>
     <div style="padding: 12px 16px;">
-  <button type="button" onclick="abrirTabla('pp')">
-    Ver tabla PP → Vox
-  </button>
+   <button onclick="descargarTabla('pp')">
+    Descargar tabla PP → Vox
+    </button>
   </div><div class="frame-wrap"><iframe title="Simulador original de trasvase PP a Vox" id="ppvox" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;es&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;Trasvase PP → Vox · simulador d&#x27;Hondt&lt;/title&gt;
 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot;&gt;
 &lt;style&gt;
@@ -132,8 +132,8 @@ pick(0);
       <div><h2>Vox → PP</h2><p>Vox cede votos al PP</p></div>
     </div>
     <div style="padding: 12px 16px;">
-  <button type="button" onclick="abrirTabla('vox')">
-    Ver tabla Vox → PP
+  <button onclick="descargarTabla('vox')">
+  Descargar tabla Vox → PP
   </button>
   </div><div class="frame-wrap"><iframe title="Simulador original de trasvase Vox a PP" id="voxpp" srcdoc="&lt;!DOCTYPE html&gt;&lt;html lang=&quot;es&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;title&gt;Trasvase Vox → PP · simulador d&#x27;Hondt&lt;/title&gt;
 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, viewport-fit=cover&quot;&gt;
@@ -239,28 +239,25 @@ pick(0);
 
 
 <script>
-function abrirTabla(tipo) {
+function descargarTabla(tipo) {
   const imagenes = {
     pp: 'imagen%201.jpg',
     vox: 'imagen%202.jpg'
   };
 
-  const modal = document.getElementById('modalTabla');
-  const imagen = document.getElementById('imagenTabla');
+  const nombres = {
+    pp: 'tabla-PP-a-Vox.jpg',
+    vox: 'tabla-Vox-a-PP.jpg'
+  };
 
-  imagen.src = imagenes[tipo];
-  modal.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
+  const enlace = document.createElement('a');
+  enlace.href = imagenes[tipo];
+  enlace.download = nombres[tipo];
+
+  document.body.appendChild(enlace);
+  enlace.click();
+  enlace.remove();
 }
-
-function cerrarTabla() {
-  document.getElementById('modalTabla').style.display = 'none';
-  document.body.style.overflow = '';
-}
-
-document.addEventListener('keydown', function(event) {
-  if (event.key === 'Escape') cerrarTabla();
-});
 </script>
 <footer>Los simuladores se muestran aislados entre sí para evitar conflictos de estilos o JavaScript. Los cálculos y datos de los archivos originales no se han reescrito.</footer>
 <script>
